@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+        <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
+                <encoder>
+                        <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M\(%line\) - %msg%n</pattern>
+                </encoder>
+        </appender>
+
+        <appender name="rollingFile" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>/var/log/metagrid/metagrid-api/metagrid-api.error.log</file>
+                <filter class="ch.qos.logback.classic.filter.ThresholdFilter">   
+			    	<level>WARN</level>   
+			    </filter>  
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                        <fileNamePattern>/var/log/metagrid/metagrid-api/metagrid-api.error.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+      					<maxHistory>15</maxHistory>
+                        <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                                <maxFileSize>2MB</maxFileSize>
+                        </timeBasedFileNamingAndTriggeringPolicy>
+                </rollingPolicy>
+                <encoder>
+                        <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M\(%line\) - %msg%n</pattern>
+                </encoder>
+        </appender>
+        <appender name="rollingFileDetail" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <file>/var/log/metagrid/metagrid-api/metagrid-api.info.log</file>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                        <fileNamePattern>/var/log/metagrid/metagrid-api/metagrid-api.info.%d{yyyy-MM-dd}-%i.log</fileNamePattern>
+      					<maxHistory>15</maxHistory>
+                        <timeBasedFileNamingAndTriggeringPolicy class="ch.qos.logback.core.rolling.SizeAndTimeBasedFNATP">
+                                <maxFileSize>5MB</maxFileSize>
+                        </timeBasedFileNamingAndTriggeringPolicy>
+                </rollingPolicy>
+                <encoder>
+                        <pattern>%d{HH:mm:ss.SSS} [%thread] %-5level %logger{36}.%M\(%line\) - %msg%n</pattern>
+                </encoder>
+        </appender>
+
+        <!--log4jdbc -->
+        <logger name="org.springframework.jdbc.core" level="TRACE" additivity="false">
+        	<appender-ref ref="console" />
+        	<appender-ref ref="rollingFileDetail" />
+        </logger>
+        <root level="INFO">
+            <appender-ref ref="console" />
+        	<appender-ref ref="rollingFile" />
+            <appender-ref ref="rollingFileDetail" />
+        </root>
+</configuration>

@@ -1,0 +1,256 @@
+﻿# policy
+open:
+  - api: /healthCheck
+    method: GET
+  - api: /v2/api/dataMap/targetTables
+    method: POST
+  - api: /v2/api/dataSourceManager/owner
+    method: POST
+  - api: /v2/api/structuredData/owner
+    method: POST
+  - api: /v2/api/structuredData/{dataSetID}
+    method: GET
+  - api: /v2/api/tree/.*/notify
+    method: GET
+  - api: /ws.*
+    method: GET
+  - api: /ws/.*
+    method: GET
+  - api: /ws/.*
+    method: POST
+  - api: /info
+    method: GET
+  - api: /v2/api-docs
+    method: GET
+  - api: /configuration/ui
+    method: GET
+  - api: /swagger-resources
+    method: GET
+  - api: .*\.html
+    method: GET
+  - api: .*\.css
+    method: GET
+  - api: .*\.js
+    method: GET
+  - api: /v2/api/dataStandard/template
+    method: GET
+  - api: /v2/api/hdfs/downloadToCustomer
+    method: GET
+
+restricted:
+  - group: Meta-Grid
+    privileges:
+      - name: manageDataSource
+        displayName: 数据源配置信息的新增、编辑、删除与测试连接
+        dependency: viewDataSource
+        hidden: false
+        apis:
+          - api: /v2/api/dataSourceManager/elasticsearch/
+            method: POST
+          - api: /v2/api/dataSourceManager/elasticsearch/ping
+            method: POST
+          - api: /v2/api/dataSourceManager/elasticsearch/{dataSourceId}
+            method: PUT
+          - api: /v2/api/dataSourceManager/hbase/
+            method: POST
+          - api: /v2/api/dataSourceManager/hbase/ping
+            method: POST
+          - api: /v2/api/dataSourceManager/hbase/{dataSourceId}
+            method: PUT
+          - api: /v2/api/dataSourceManager/hive/
+            method: POST
+          - api: /v2/api/dataSourceManager/hive/ping
+            method: POST
+          - api: /v2/api/dataSourceManager/hive/{dataSourceId}
+            method: PUT
+          - api: /v2/api/dataSourceManager/oracle/
+            method: POST
+          - api: /v2/api/dataSourceManager/oracle/ping
+            method: POST
+          - api: /v2/api/dataSourceManager/oracle/{dataSourceId}
+            method: PUT
+          - api: /v2/api/dataSourceManager/trafodion/
+            method: POST
+          - api: /v2/api/dataSourceManager/trafodion/ping
+            method: POST
+          - api: /v2/api/dataSourceManager/trafodion/{dataSourceId}
+            method: PUT
+          - api: /v2/api/dataSourceManager/{dataSourceId}
+            method: DELETE
+          - api: /v2/api/dataSourceManager/elasticsearch/ping
+            method: GET
+          - api: /v2/api/dataSourceManager/hbase/ping
+            method: GET
+          - api: /v2/api/dataSourceManager/hive/ping
+            method: GET
+          - api: /v2/api/dataSourceManager/oracle/ping
+            method: GET
+          - api: /v2/api/dataSourceManager/trafodion/ping
+            method: GET
+          - api: /v2/api/dataSourceManager/hdfs/
+            method: POST
+          - api: /v2/api/dataSourceManager/hdfs/ping
+            method: GET
+          - api: /v2/api/dataSourceManager/hdfs/ping
+            method: POST
+          - api: /v2/api/dataSourceManager/hdfs/{dataSourceId}
+            method: PUT
+      - name: viewDataSource
+        displayName: 数据源配置信息查看
+        hidden: false
+        apis:
+          - api: /v2/api/dataSourceManager/
+            method: GET
+          - api: /v2/api/tree/
+            method: GET
+      - name: viewTree
+        displayName: 元数据管理
+        dependency: tag
+        hidden: false
+        apis:
+          - api: /v2/api/tree/
+            method: GET
+          - api: /v2/api/tree/{sourceId}/
+            method: POST
+          - api: /v2/api/structuredData/{dataSetID}/bias
+            method: PUT
+          - api: /v2/api/structuredData/{dataSetID}
+            method: GET
+          - api: /v2/api/structuredData/{dataSetID}/fields
+            method: GET
+          - api: /v2/api/structuredData/{dataSetID}/fields/{fieldID}
+            method: PUT
+          - api: /v2/api/structuredData/{dataSetID}/sample
+            method: POST
+          - api: /v2/api/dataPreview/hbase
+            method: POST
+          - api: /v2/api/search/
+            method: POST
+          - api: /v2/api/dataPreview/hbase
+            method: POST
+          - api: /v2/api/queries/histories
+            method: GET
+          - api: /v2/api/queries/histories
+            method: POST
+          - api: /v2/api/queries/sql
+            method: POST
+          - api: /v2/api/hdfs/listStatus
+            method: GET
+          - api: /v2/api/hdfs/getBlockLocations
+            method: GET
+          - api: /v2/api/hdfs/downloadhdfstolocal
+            method: GET
+          - api: /v2/api/hdfs/file/attribute
+            method: GET
+          - api: /v2/api/hdfs/file/attribute/search
+            method: GET
+          - api: /v2/api/hdfs/file/attribute/{id}
+            method: PUT
+          - api: /v2/api/hdfs/file/attribute/{id}
+            method: DELETE
+          - api: /v2/api/hdfs/file/attribute
+            method: POST
+      - name: freshDataSource
+        displayName: 手动同步元数据
+        dependency: viewTree
+        hidden: false
+        apis:
+          - api: /v2/api/tree/{sourceId}/fresh
+            method: GET
+      - name: viewSchemaHistory
+        displayName: 结构变更历史查看
+        dependency: viewTree
+        hidden: false
+        apis:
+          - api: /v2/api/schemaHistory/datasetDiff
+            method: GET
+          - api: /v2/api/schemaHistory/stageDates
+            method: GET
+          - api: /v2/api/schemaHistory/stageLog
+            method: GET
+      - name: dataDomain
+        displayName: 数据资源集合
+        hidden: false
+        apis:
+          - api: /v2/api/dataDomain/
+            method: GET
+          - api: /v2/api/dataDomain/{domainId}
+            method: GET
+          - api: /v2/api/dataDomain/
+            method: POST
+          - api: /v2/api/dataDomain/{domainId}
+            method: PUT
+          - api: /v2/api/dataDomain/{domainId}
+            method: DELETE
+          - api: /v2/api/dataDomain/{domainId}/attrs
+            method: GET
+          - api: /v2/api/dataDomain/{domainId}/attrs
+            method: PUT
+          - api: /v2/api/dataDomain/{domainId}/entities
+            method: GET
+          - api: /v2/api/dataDomain/{domainId}/entities
+            method: PUT
+          - api: /v2/api/dataDomain/{domainId}/identifiers
+            method: GET
+          - api: /v2/api/dataDomain/{domainId}/identifiers
+            method: PUT
+          - api: /v2/api/dataDomain/{domainId}/dataservice
+            method: POST
+      - name: dataStandard
+        displayName: 业务字典
+        hidden: false
+        apis:
+          - api: /v2/api/dataStandard/
+            method: POST
+          - api: /v2/api/dataStandard/batch
+            method: POST
+          - api: /v2/api/dataStandard/new
+            method: POST
+          - api: /v2/api/dataStandard/{identifier}/tables
+            method: GET
+          - api: /v2/api/dataStandard/{standardId}
+            method: DELETE
+          - api: /v2/api/dataStandard/{standardId}
+            method: PUT
+      - name: dataMap
+        displayName: 数据地图
+        hidden: false
+        apis:
+          - api: /v2/api/dataMap/coverage
+            method: GET
+          - api: /v2/api/dataMap/tagstatis
+            method: GET
+          - api: /v2/api/dataMap/tree
+            method: GET
+          - api: /v2/api/dataMap/{stdTableId}/fields
+            method: GET
+          - api: /v2/api/dataMap/{dataSetId}/match
+            method: PUT
+          - api: /v2/api/dataMap/batch
+            method: POST
+          - api: /v2/api/dataMap/template
+            method: GET
+      - name: tag
+        displayName: 标签管理
+        hidden: false
+        apis:
+          - api: /v2/api/tree/tags
+            method: GET
+          - api: /v2/api/tree/tag
+            method: POST
+          - api: /v2/api/structuredData/{dataSetID}/tags
+            method: GET
+          - api: /v2/api/structuredData/{dataSetID}/tags
+            method: PUT
+          - api: /v2/api/search/tag
+            method: POST
+          - api: /v2/api/tags/
+            method: GET
+          - api: /v2/api/tags/
+            method: POST
+          - api: /v2/api/tags/{id}
+            method: PUT
+          - api: /v2/api/tags/{id}
+            method: DELETE
+
+
