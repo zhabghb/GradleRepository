@@ -1,0 +1,1 @@
+include "metagrid-common", "metadata-etl", "backend-service", "api"
